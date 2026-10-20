@@ -61,7 +61,7 @@ const Footer = () => {
           <div className="footer-brand">
             <div className="footer-logo">
               <Image src="/images/logos/IMG_3904.jpeg" alt="" width={36} height={36} />
-              <span>Tevra<span>tech</span></span>
+              <span>Only <span>Dev</span></span>
             </div>
             <p>
               Custom websites and web applications for businesses and startups — designed around you, delivered on a

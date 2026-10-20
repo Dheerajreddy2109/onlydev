@@ -13,13 +13,13 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
-const title = 'Website & Web App Development Company in India | Tevratech';
+const title = 'Website & Web App Development Company in India | Only Dev';
 const description =
   'Custom website design and web application development for businesses and startups. SEO-ready business websites from ₹7,999, e-commerce stores, booking systems, SaaS MVPs, CRMs and dashboards built with Next.js & React. Fixed written quote. You own the code.';
 
 export const metadata = {
   metadataBase: new URL(site.url),
-  title: { default: title, template: '%s | Tevratech' },
+  title: { default: title, template: '%s | Only Dev' },
   description,
   keywords: [
     'website development company',
@@ -53,7 +53,7 @@ export const metadata = {
     title,
     description,
     locale: 'en_IN',
-    images: [{ url: '/images/logos/IMG_3903.jpeg', width: 1170, height: 442, alt: 'Tevratech' }],
+    images: [{ url: '/images/logos/IMG_3903.jpeg', width: 1170, height: 442, alt: 'Only Dev' }],
   },
   twitter: {
     card: 'summary_large_image',

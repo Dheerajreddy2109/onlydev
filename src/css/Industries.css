@@ -1,6 +1,6 @@
 .ind {
   background:
-    radial-gradient(600px 400px at 0% 100%, rgba(198, 243, 107, 0.2), transparent 60%),
+    radial-gradient(600px 400px at 0% 100%, rgba(214, 190, 150, 0.2), transparent 60%),
     #fff;
 }
 
@@ -91,7 +91,7 @@
   border-radius: 12px;
   background: var(--lime-soft);
   color: var(--brand-ink);
-  border: 1px solid #e3f2c3;
+  border: 1px solid #f0e5cf;
 }
 
 .inc-card h3 {

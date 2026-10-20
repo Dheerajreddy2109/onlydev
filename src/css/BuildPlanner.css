@@ -1,6 +1,6 @@
 .bp {
   background:
-    radial-gradient(800px 500px at 100% 0%, rgba(61, 220, 151, 0.1), transparent 60%),
+    radial-gradient(800px 500px at 100% 0%, rgba(176, 141, 91, 0.1), transparent 60%),
     #fff;
 }
 
@@ -83,7 +83,7 @@
 .bp-fields input:focus {
   outline: none;
   border-color: var(--brand);
-  box-shadow: 0 0 0 4px rgba(15, 157, 88, 0.12);
+  box-shadow: 0 0 0 4px rgba(176, 141, 91, 0.12);
 }
 
 .bp-chips-group {
@@ -112,15 +112,15 @@
 }
 
 .bp-chips button.on {
-  background: var(--ink);
-  border-color: var(--ink);
+  background: var(--brand);
+  border-color: var(--brand);
   color: #fff;
 }
 
 .bp-chips button.alt.on {
   background: var(--brand-deep);
   border-color: var(--brand-deep);
-  color: var(--lime);
+  color: var(--brand-ink);
 }
 
 .bp-actions {
@@ -138,12 +138,12 @@
   padding: 7px 24px 7px 7px;
   border: none;
   border-radius: 999px;
-  background: var(--ink);
+  background: var(--brand);
   color: #fff;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 17px;
-  box-shadow: 0 14px 30px -12px rgba(11, 21, 17, 0.7);
+  box-shadow: 0 14px 30px -12px rgba(60, 48, 36, 0.7);
   transition: translate 0.2s ease;
 }
 
@@ -184,9 +184,9 @@
   padding: 22px;
   border-radius: 22px;
   background:
-    radial-gradient(400px 200px at 0% 100%, rgba(61, 220, 151, 0.18), transparent 70%),
-    linear-gradient(180deg, #0f1f19, #08110d);
-  color: #fff;
+    radial-gradient(400px 200px at 0% 100%, rgba(176, 141, 91, 0.18), transparent 70%),
+    linear-gradient(180deg, #fbf8f3, #f4eee5);
+  color: var(--ink);
   box-shadow: var(--shadow-lg);
 }
 
@@ -195,7 +195,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #8fb3a3;
+  color: #a99c8c;
 }
 
 .bp-counter {
@@ -215,14 +215,14 @@
 }
 
 .bp-counter span {
-  color: #8fb3a3;
+  color: #a99c8c;
   font-weight: 600;
 }
 
 .bp-progress {
   height: 6px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(60, 48, 36, 0.07);
   overflow: hidden;
 }
 
@@ -239,7 +239,7 @@
   margin: 12px 0 14px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--lime);
+  color: var(--brand-ink);
 }
 
 .bp-steps {
@@ -257,7 +257,7 @@
   padding: 8px;
   border-radius: 10px;
   font-size: 13.5px;
-  color: #93a69e;
+  color: #9c9186;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -267,7 +267,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(60, 48, 36, 0.14);
   font-size: 11px;
   font-weight: 600;
 }
@@ -278,13 +278,13 @@
 }
 
 .bp-steps li.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgba(60, 48, 36, 0.06);
+  color: var(--ink);
 }
 
 .bp-steps li.active .num {
-  border-color: var(--lime);
-  color: var(--lime);
+  border-color: var(--brand-ink);
+  color: var(--brand-ink);
 }
 
 .bp-steps li.done {
@@ -322,8 +322,8 @@
 }
 
 .bp-card.active {
-  border-color: rgba(15, 157, 88, 0.55);
-  box-shadow: 0 0 0 5px rgba(15, 157, 88, 0.08), 0 24px 50px -24px rgba(15, 157, 88, 0.5);
+  border-color: rgba(176, 141, 91, 0.55);
+  box-shadow: 0 0 0 5px rgba(176, 141, 91, 0.08), 0 24px 50px -24px rgba(176, 141, 91, 0.5);
   scale: 1.01;
 }
 
@@ -364,7 +364,7 @@
 .bp-card-hours {
   padding: 4px 10px;
   border-radius: 999px;
-  background: #e7f7ee;
+  background: #f5eee3;
   color: var(--brand-ink);
   font-size: 12.5px;
   font-weight: 700;
@@ -440,7 +440,7 @@
 }
 
 .bp-search .keep em {
-  background: #e7f7ee;
+  background: #f5eee3;
   color: var(--brand-ink);
 }
 
@@ -507,7 +507,7 @@
   height: 22px;
   padding: 4px;
   border-radius: 50%;
-  background: #e7f7ee;
+  background: #f5eee3;
   color: var(--brand);
 }
 
@@ -519,14 +519,14 @@
   gap: 16px;
   padding: 20px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #eef8f2, #f6fbe6);
+  background: linear-gradient(135deg, #f7f1e8, #fbf6ec);
 }
 
 .bp-design-desktop {
   padding: 16px;
   border-radius: 12px;
   background: var(--brand-deep);
-  color: #fff;
+  color: var(--ink);
   min-height: 170px;
 }
 
@@ -535,7 +535,7 @@
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  color: #a8cdbb;
+  color: #a99c8c;
   margin-bottom: 18px;
 }
 
@@ -564,7 +564,7 @@
 
 .bp-design-desktop p {
   font-size: 12.5px;
-  color: #a8cdbb;
+  color: #a99c8c;
   margin: 6px 0 14px;
 }
 
@@ -654,7 +654,7 @@
 }
 
 .bp-result.show .bp-receipt {
-  box-shadow: 0 0 0 4px rgba(198, 243, 107, 0.5), var(--shadow-lg);
+  box-shadow: 0 0 0 4px rgba(214, 190, 150, 0.5), var(--shadow-lg);
   rotate: -0.6deg;
 }
 
@@ -677,13 +677,13 @@
   font-size: 12.5px;
   color: var(--muted);
   padding-bottom: 14px;
-  border-bottom: 1px dashed #d9d5c0;
+  border-bottom: 1px dashed #e4dccd;
 }
 
 .bp-receipt ul {
   list-style: none;
   padding: 12px 0;
-  border-bottom: 1px dashed #d9d5c0;
+  border-bottom: 1px dashed #e4dccd;
 }
 
 .bp-receipt li,
@@ -712,8 +712,8 @@
   margin: 16px 0;
   padding: 16px 18px;
   border-radius: 14px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--brand-deep);
+  color: var(--ink);
 }
 
 .bp-receipt-price span {
@@ -737,7 +737,7 @@
 .bp-receipt-price small {
   font-size: 12px;
   font-weight: 600;
-  color: var(--lime);
+  color: var(--brand-ink);
 }
 
 .bp-pay {

@@ -36,7 +36,7 @@ const Navbar = () => {
         <Link href="/" className="nav-logo" onClick={() => setOpen(false)}>
           <Image src="/images/logos/IMG_3904.jpeg" alt="" width={34} height={34} priority />
           <span>
-            Tevra<span className="nav-logo-accent">tech</span>
+            Only <span className="nav-logo-accent">Dev</span>
           </span>
         </Link>
 

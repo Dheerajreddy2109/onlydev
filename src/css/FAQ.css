@@ -83,7 +83,7 @@
 .tech {
   padding-top: 0;
   background:
-    radial-gradient(800px 400px at 50% 0%, rgba(198, 243, 107, 0.2), transparent 70%),
+    radial-gradient(800px 400px at 50% 0%, rgba(214, 190, 150, 0.2), transparent 70%),
     var(--bg-soft);
 }
 

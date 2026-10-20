@@ -1,28 +1,28 @@
 :root {
   --bg: #ffffff;
-  --bg-soft: #f5f8f6;
-  --bg-tint: #f0faf4;
-  --ink: #0b1511;
-  --ink-2: #33403b;
-  --muted: #66736e;
-  --line: #e4eae7;
-  --line-strong: #d3ddd8;
+  --bg-soft: #f8f5f0;
+  --bg-tint: #f7f1e8;
+  --ink: #2a2622;
+  --ink-2: #4f4841;
+  --muted: #8a8178;
+  --line: #ece6dd;
+  --line-strong: #ddd3c6;
 
-  --brand: #0f9d58;
-  --brand-ink: #087443;
-  --brand-deep: #0a2e20;
-  --mint: #3ddc97;
-  --lime: #c6f36b;
-  --lime-soft: #f2fbdc;
+  --brand: #b08d5b;
+  --brand-ink: #8a6a3f;
+  --brand-deep: #f1e9dd;
+  --mint: #d8c09a;
+  --lime: #e8d9bd;
+  --lime-soft: #f8f2e8;
   --wa: #1fae5b;
   --danger: #d6453d;
   --danger-soft: #fdf1f0;
 
   --radius: 18px;
   --radius-sm: 12px;
-  --shadow-sm: 0 1px 2px rgba(11, 21, 17, 0.05), 0 2px 8px rgba(11, 21, 17, 0.04);
-  --shadow: 0 2px 4px rgba(11, 21, 17, 0.04), 0 12px 32px -8px rgba(11, 21, 17, 0.12);
-  --shadow-lg: 0 30px 60px -20px rgba(11, 40, 28, 0.28);
+  --shadow-sm: 0 1px 2px rgba(60, 48, 36, 0.05), 0 2px 8px rgba(60, 48, 36, 0.04);
+  --shadow: 0 2px 4px rgba(60, 48, 36, 0.04), 0 12px 32px -8px rgba(60, 48, 36, 0.12);
+  --shadow-lg: 0 30px 60px -20px rgba(80, 62, 40, 0.28);
 
   --font-display: var(--font-jakarta), 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
@@ -149,7 +149,7 @@ img, svg {
 }
 
 .gradient-text {
-  background: linear-gradient(92deg, #087443 0%, #0f9d58 35%, #14b8a6 65%, #65a30d 100%);
+  background: linear-gradient(92deg, #8a6a3f 0%, #b08d5b 35%, #14b8a6 65%, #65a30d 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -183,13 +183,13 @@ img, svg {
 }
 
 .btn-dark {
-  background: var(--ink);
+  background: var(--brand);
   color: #fff;
-  box-shadow: 0 10px 24px -10px rgba(11, 21, 17, 0.6);
+  box-shadow: 0 10px 24px -10px rgba(176, 141, 91, 0.55);
 }
 
 .btn-dark:hover {
-  background: #17241f;
+  background: var(--brand-ink);
 }
 
 .btn-wa {
@@ -335,7 +335,7 @@ img, svg {
   top: 0;
   z-index: 1000;
   padding: 10px 14px;
-  background: var(--brand-deep);
+  background: var(--brand);
   color: #fff;
   border-radius: 0 0 8px 0;
   font-weight: 600;

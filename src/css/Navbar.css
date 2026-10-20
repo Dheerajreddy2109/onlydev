@@ -11,7 +11,7 @@
 
 .navbar.is-scrolled {
   border-bottom-color: var(--line);
-  box-shadow: 0 6px 24px -18px rgba(11, 21, 17, 0.4);
+  box-shadow: 0 6px 24px -18px rgba(60, 48, 36, 0.4);
 }
 
 .announce {
@@ -21,7 +21,7 @@
   gap: 10px;
   padding: 8px 16px;
   background: var(--brand-deep);
-  color: #d9f5e6;
+  color: #6f655b;
   font-size: 13px;
   font-weight: 500;
   text-align: center;
@@ -32,15 +32,15 @@
   height: 7px;
   border-radius: 50%;
   background: var(--lime);
-  box-shadow: 0 0 0 0 rgba(198, 243, 107, 0.7);
+  box-shadow: 0 0 0 0 rgba(214, 190, 150, 0.7);
   animation: pulse 2s infinite;
   flex: none;
   display: none;
 }
 
 @keyframes pulse {
-  70% { box-shadow: 0 0 0 8px rgba(198, 243, 107, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(198, 243, 107, 0); }
+  70% { box-shadow: 0 0 0 8px rgba(214, 190, 150, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(214, 190, 150, 0); }
 }
 
 .nav-inner {
@@ -143,7 +143,7 @@
     padding: 8px 16px 20px;
     background: #fff;
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 20px 30px -20px rgba(11, 21, 17, 0.3);
+    box-shadow: 0 20px 30px -20px rgba(60, 48, 36, 0.3);
     display: none;
   }
 

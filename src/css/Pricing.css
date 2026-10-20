@@ -38,11 +38,11 @@
 
 .price-tabs button.on {
   background: var(--brand-deep);
-  color: #fff;
+  color: var(--ink);
 }
 
 .price-tabs button.on span {
-  color: #a8cdbb;
+  color: #a99c8c;
 }
 
 /* Highlight that slides between tabs (placed by Pricing.js; moves with a CSS transition). Until it has been
@@ -87,8 +87,8 @@
 
 .price-card.popular {
   border: 2px solid var(--brand);
-  box-shadow: 0 30px 60px -30px rgba(15, 157, 88, 0.45);
-  background: linear-gradient(180deg, #f3fbf6, #fff 40%);
+  box-shadow: 0 30px 60px -30px rgba(176, 141, 91, 0.45);
+  background: linear-gradient(180deg, #faf6ef, #fff 40%);
 }
 
 .price-badge {
@@ -188,7 +188,7 @@
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: #e7f7ee;
+  background: #f5eee3;
   color: var(--brand);
 }
 
