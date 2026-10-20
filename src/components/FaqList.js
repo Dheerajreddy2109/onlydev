@@ -27,7 +27,7 @@ export default function FaqList({ items }) {
           <div key={f.q} className={`faq-item ${open ? 'is-open' : ''}`}>
             <button type="button" className="faq-q" aria-expanded={open} aria-controls={panelId} onClick={() => toggle(i)}>
               {f.q}
-              <Icon name="chevron" size={18} />
+              <Icon name="plus" size={16} />
             </button>
             <div className="faq-panel" id={panelId}>
               <div>

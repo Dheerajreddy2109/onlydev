@@ -76,7 +76,82 @@ const paths = {
     </>
   ),
   chevron: <path d="m6 9 6 6 6-6" />,
+  minus: <path d="M5 12h14" />,
   play: <path d="M8 5.5v13l10.5-6.5L8 5.5Z" fill="currentColor" />,
+  bag: (
+    <>
+      <path d="M5.5 8h13l-1 12.5h-11L5.5 8Z" />
+      <path d="M9 8V6.5a3 3 0 0 1 6 0V8" />
+    </>
+  ),
+  star: <path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.5Z" />,
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </>
+  ),
+  user: (
+    <>
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20c1-3.6 3.8-5.5 7-5.5s6 1.9 7 5.5" />
+    </>
+  ),
+  bell: (
+    <>
+      <path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15L6 16Z" />
+      <path d="M10 20.5a2 2 0 0 0 4 0" />
+    </>
+  ),
+  chart: (
+    <>
+      <path d="M4 4v16h16" />
+      <path d="m7.5 14.5 3.5-4 3 3 5-6" />
+    </>
+  ),
+  heart: <path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20Z" />,
+  utensils: <path d="M7 3v7M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3M7 10v11M17 3c-2 1.4-3 3.6-3 6.5V13h3v8" />,
+  book: <path d="M4 5h5.5A2.5 2.5 0 0 1 12 7.5V20a2 2 0 0 0-2-2H4V5ZM20 5h-5.5A2.5 2.5 0 0 0 12 7.5V20a2 2 0 0 1 2-2h6V5Z" />,
+  home: (
+    <>
+      <path d="m3.5 11 8.5-7 8.5 7" />
+      <path d="M6 9.5V20h12V9.5M10 20v-5h4v5" />
+    </>
+  ),
+  box: (
+    <>
+      <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+      <path d="m4 7.5 8 4.5 8-4.5M12 12v9" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3.5" y="7" width="17" height="12.5" rx="2" />
+      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17" />
+    </>
+  ),
+  scissors: (
+    <>
+      <circle cx="6.5" cy="7" r="2.5" />
+      <circle cx="6.5" cy="17" r="2.5" />
+      <path d="M8.6 8.4 20 18M8.6 15.6 20 6" />
+    </>
+  ),
+  truck: (
+    <>
+      <path d="M3 6.5h11v9.5H3zM14 9.5h4l3 3.2V16h-7" />
+      <circle cx="7" cy="17.5" r="1.8" />
+      <circle cx="17" cy="17.5" r="1.8" />
+    </>
+  ),
+  grid: (
+    <>
+      <rect x="4" y="4" width="6.5" height="6.5" rx="1.5" />
+      <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" />
+      <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" />
+      <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
+    </>
+  ),
   palette: (
     <>
       <path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.5-1-2.6 0-.9.7-1.6 1.7-1.6H17a4 4 0 0 0 4-4C21 6.7 17 3 12 3Z" />
@@ -100,6 +175,7 @@ export default function Icon({ name, size = 20, className, strokeWidth = 1.8 }) 
       strokeLinejoin="round"
       aria-hidden="true"
       className={className}
+      data-icon={name}
     >
       {paths[name]}
     </svg>

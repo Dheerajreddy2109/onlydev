@@ -20,8 +20,6 @@ export const contactOptions = {
   timelines: ['ASAP', 'Within a month', '1–3 months', 'Just exploring'],
 };
 
-export const rupees = (n) => '₹' + n.toLocaleString('en-IN');
-
 /* ---------- Keyword strip ---------- */
 export const keywordStrip = [
   'Custom website development',
@@ -48,12 +46,13 @@ export const industries = [
   { id: 'startup', label: 'Startup', noun: 'software startup', topic: 'software', sample: 'Ledgerly' },
 ];
 
+// Labels double as the contact form's project choices (contactOptions.projects).
 export const projectTypes = [
-  { id: 'website', label: 'Business website', price: 19999, pkg: 'Business Website' },
-  { id: 'store', label: 'Online store', price: 49999, pkg: 'E-commerce Store' },
-  { id: 'booking', label: 'Booking system', price: 79999, pkg: 'MVP Web App' },
-  { id: 'webapp', label: 'Web app / SaaS', price: 149999, pkg: 'Custom Web App' },
-  { id: 'dashboard', label: 'Dashboard / CRM', price: 149999, pkg: 'Custom Web App' },
+  { id: 'website', label: 'Business website' },
+  { id: 'store', label: 'Online store' },
+  { id: 'booking', label: 'Booking system' },
+  { id: 'webapp', label: 'Web app / SaaS' },
+  { id: 'dashboard', label: 'Dashboard / CRM' },
 ];
 
 // Text placeholders: {name} {city} {noun} {topic} {slug}
@@ -202,83 +201,6 @@ export const withSite = [
   'Customers book, pay and get updates on their own — at 2 am if they want.',
 ];
 
-/* ---------- Pricing ---------- */
-export const pricing = {
-  websites: [
-    {
-      name: 'Launch Page',
-      project: 'Business website',
-      price: 7999,
-      note: 'one-time',
-      for: 'A one-page website to get found and get calls.',
-      cta: 'Start with one page',
-      features: ['1 long-scroll, mobile-first page', 'WhatsApp & click-to-call buttons', 'Google Maps & business hours', 'Basic on-page SEO', 'Free SSL & fast hosting setup', 'Live in 5–7 days'],
-    },
-    {
-      name: 'Business Website',
-      project: 'Business website',
-      price: 19999,
-      note: 'one-time',
-      for: 'The complete website for a growing local business.',
-      popular: true,
-      cta: 'Build my website',
-      features: ['Up to 8 custom-designed pages', 'Copy written around real searches', 'Enquiry & lead forms', 'Schema markup, sitemap & Search Console', 'Google Analytics 4 set up', 'Core Web Vitals optimised', 'Live in 2–3 weeks'],
-    },
-    {
-      name: 'Growth Website + CMS',
-      project: 'Business website',
-      price: 34999,
-      note: 'one-time',
-      for: 'Edit pages and publish blogs yourself, without a developer.',
-      cta: 'Get the CMS website',
-      features: ['Up to 20 pages', 'Admin panel to edit pages & blog', 'Landing pages for ads', 'English + Hindi / regional language', 'Lead dashboard & email alerts', 'Live in 3–4 weeks'],
-    },
-    {
-      name: 'E-commerce Store',
-      project: 'Online store',
-      price: 49999,
-      from: true,
-      note: 'starting',
-      for: 'Sell online with your own store — no marketplace commission.',
-      cta: 'Plan my store',
-      features: ['Unlimited products & categories', 'Razorpay, UPI, cards & COD', 'Order, stock & customer admin', 'GST invoices & shipping rules', 'Product schema for Google Shopping', 'Live in 4–6 weeks'],
-    },
-  ],
-  webapps: [
-    {
-      name: 'MVP Web App',
-      project: 'Web app / SaaS',
-      price: 79999,
-      from: true,
-      note: 'starting',
-      for: 'Launch a working product fast and test it with real users.',
-      cta: 'Scope my MVP',
-      features: ['Clickable prototype first', 'Login, roles & core workflow', 'Admin dashboard', 'Payments integration', 'Deployed on cloud with CI/CD', 'Live in 4–6 weeks'],
-    },
-    {
-      name: 'Custom Web App',
-      project: 'Web app / SaaS',
-      price: 149999,
-      from: true,
-      note: 'starting',
-      for: 'CRMs, portals and internal tools built around how you work.',
-      popular: true,
-      cta: 'Discuss my web app',
-      features: ['Discovery workshop & data model', 'Custom UI design system', 'Role-based access & audit logs', 'Integrations — WhatsApp, Sheets, Tally, Zoho', 'Reports & analytics', 'Automated tests & security checks'],
-    },
-    {
-      name: 'SaaS Platform',
-      project: 'Web app / SaaS',
-      custom: true,
-      note: 'written quote',
-      for: 'Multi-tenant products with subscriptions, built to scale.',
-      cta: 'Talk to an engineer',
-      features: ['Multi-tenant architecture', 'Subscription billing (Razorpay / Stripe)', 'AI features — chat, search, automation', 'Public API & webhooks', 'Scalable cloud infrastructure', 'Ongoing product partnership'],
-    },
-  ],
-  care: { price: 999, text: 'Hosting, security updates, backups and small edits — from ₹999/month. Cancel any time.' },
-};
-
 /* ---------- Industries ---------- */
 export const industryUseCases = [
   { title: 'Clinics & healthcare', items: ['Doctor & dental websites', 'Online appointment booking', 'Patient records portal'] },
@@ -312,17 +234,16 @@ export const steps = [
 
 /* ---------- FAQ ---------- */
 export const faqs = [
-  { q: 'How much does a website cost in India?', a: 'A one-page business website starts at ₹7,999 and a full multi-page business website at ₹19,999. E-commerce stores start at ₹49,999. You get a fixed, written quote before any work begins — no hidden costs.' },
   { q: 'What is the difference between a website and a web application?', a: 'A website mainly shows information — your services, prices and contact details — and brings in enquiries. A web application lets people do things: log in, book, pay, manage orders or track data. Many businesses start with a website and add web-app features like booking or a customer portal later.' },
   { q: 'How long does it take to build a website or web app?', a: 'A one-page site is usually live in 5–7 days, a business website in 2–3 weeks, and an online store in 4–6 weeks. An MVP web app typically takes 4–6 weeks; larger custom web apps are planned in phases with dates in your written quote.' },
   { q: 'Will my website show up on Google?', a: 'Every site is built SEO-ready: keyword research, proper titles and descriptions, schema markup, sitemap, Google Search Console and Google Business Profile linking. Ranking also depends on competition and reviews, so we will not promise a #1 position — but we make sure Google can read and understand every page.' },
   { q: 'Do you build SaaS products and MVPs for startups?', a: 'Yes. We build MVPs and SaaS platforms with Next.js, React, Node.js and PostgreSQL — including login, subscriptions, admin dashboards and AI features. We start with a clickable prototype so you can test the idea before full development.' },
   { q: 'Can you add AI features or a chatbot to my website?', a: 'Yes. We integrate AI chatbots that answer customer questions from your own content, smart search, lead qualification and workflow automation — only where it genuinely saves time or wins customers.' },
   { q: 'Who owns the website and the code?', a: 'You do. The domain is registered in your name and you receive the source code, design files and every login. You are free to move to another developer at any time.' },
-  { q: 'Can I update the website myself?', a: 'With the Growth Website + CMS package and all web apps, you get an admin panel to edit text, images, products and blog posts from your phone or laptop — no coding needed.' },
+  { q: 'Can I update the website myself?', a: 'Yes. CMS websites and all web apps come with an admin panel to edit text, images, products and blog posts from your phone or laptop — no coding needed.' },
   { q: 'Do you integrate payment gateways like Razorpay, UPI and Stripe?', a: 'Yes — Razorpay, UPI, cards, net banking, cash-on-delivery and Stripe for international payments, plus automatic GST invoices and order notifications.' },
   { q: 'Do you redesign existing websites?', a: 'Yes. We rebuild slow or outdated websites on a modern stack, keep your existing Google rankings with proper redirects, and usually make them several times faster.' },
-  { q: 'What happens after launch?', a: 'You can choose a care plan from ₹999/month for hosting, security updates, backups and small edits. New features or pages are quoted separately in writing.' },
+  { q: 'What happens after launch?', a: 'You can choose a monthly care plan for hosting, security updates, backups and small edits. New features or pages are quoted separately in writing.' },
 ];
 
 /* ---------- Tech stack ---------- */

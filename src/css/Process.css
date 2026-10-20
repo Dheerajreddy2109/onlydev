@@ -1,6 +1,5 @@
 .proc-track {
   position: relative;
-  margin-top: 52px;
 }
 
 .proc-grid {
@@ -13,9 +12,9 @@
 /* Runs from the centre of the first icon to the centre of the last one (4 columns, 28px gaps). */
 .proc-line {
   position: absolute;
-  top: 27px;
-  left: 28px;
-  right: calc((100% - 84px) / 4 - 28px);
+  top: 31px;
+  left: 32px;
+  right: calc((100% - 84px) / 4 - 32px);
   height: 2px;
   background: linear-gradient(90deg, var(--line-strong) 55%, transparent 0) 0 0 / 10px 2px repeat-x;
 }
@@ -25,7 +24,7 @@
   position: absolute;
   inset: 0;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--brand), var(--mint), var(--lime));
+  background: linear-gradient(90deg, var(--brand-light), var(--brand));
   transform: scaleX(0);
   transform-origin: 0 50%;
 }
@@ -38,13 +37,13 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  margin-bottom: 22px;
-  border-radius: 16px;
-  background: var(--lime);
+  width: 64px;
+  height: 64px;
+  margin-bottom: 26px;
+  border-radius: 20px;
+  background: #ead7b4;
   color: var(--ink);
-  box-shadow: 0 0 0 6px #fff;
+  box-shadow: 0 0 0 8px var(--bg), inset 0 0 0 1px rgba(130, 97, 47, 0.12);
 }
 
 .proc-icon em {
@@ -53,41 +52,50 @@
   bottom: -8px;
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--bg);
   border-radius: 50%;
-  background: var(--brand);
+  background: var(--gold-fill);
   color: #fff;
-  font-style: normal;
   font-size: 10.5px;
-  font-weight: 700;
-  border: 2px solid #fff;
+  font-style: normal;
+  font-weight: 600;
 }
 
 .proc-step h3 {
-  font-size: 19px;
-  letter-spacing: -0.025em;
   margin-bottom: 8px;
+  font-size: 20px;
+  letter-spacing: -0.025em;
 }
 
 .proc-step p {
+  max-width: 250px;
   font-size: 15px;
   color: var(--muted);
-  max-width: 250px;
 }
 
 /* ---------- Quote ---------- */
 .quote {
+  overflow: clip;
   background:
-    radial-gradient(700px 500px at 0% 0%, rgba(176, 141, 91, 0.14), transparent 60%),
-    radial-gradient(700px 500px at 100% 100%, rgba(214, 190, 150, 0.22), transparent 60%),
+    radial-gradient(700px 500px at 100% 100%, rgba(242, 216, 204, 0.4), transparent 60%),
     var(--bg-soft);
+  box-shadow: inset 0 1px 0 var(--line);
+}
+
+.quote-glow {
+  top: -260px;
+  left: -260px;
+  width: 760px;
+  height: 760px;
+  --glow: rgba(234, 208, 166, 0.55);
 }
 
 .quote-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  gap: 72px;
   align-items: center;
 }
 
@@ -95,20 +103,27 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin: 28px 0;
+  gap: 12px;
+  margin: 30px 0;
 }
 
 .quote-list li {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 15px;
+  gap: 12px;
+  font-size: 15.5px;
   font-weight: 500;
+  color: var(--ink-2);
 }
 
 .quote-list svg {
-  color: var(--brand);
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--gold-fill);
+  color: #fff;
 }
 
 .quote-contacts {
@@ -121,28 +136,39 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: 999px;
+  padding: 11px 18px;
   border: 1px solid var(--line-strong);
-  background: #fff;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   font-weight: 500;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.quote-contacts a:hover {
+  border-color: #cdbca2;
+  background: #fff;
+}
+
+.quote-contacts svg {
+  color: var(--brand);
 }
 
 .quote-card {
-  padding: 32px;
-  border-radius: 28px;
-  background: #fff;
+  padding: 36px;
   border: 1px solid var(--line);
-  box-shadow: var(--shadow-lg);
+  border-radius: 30px;
+  background: linear-gradient(180deg, #fff, #fffcf8);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 #fff;
 }
 
 .quote-card h3 {
-  font-size: 24px;
+  font-size: 26px;
+  letter-spacing: -0.03em;
 }
 
 .quote-sub {
-  margin: 4px 0 20px;
+  margin: 6px 0 22px;
   font-size: 14.5px;
   color: var(--muted);
 }
@@ -150,14 +176,14 @@
 @media (max-width: 960px) {
   .proc-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 40px 28px;
+    gap: 44px 28px;
   }
   .proc-line {
     display: none;
   }
   .quote-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 44px;
   }
 }
 
@@ -166,7 +192,7 @@
     grid-template-columns: 1fr;
   }
   .quote-card {
-    padding: 22px;
-    border-radius: 22px;
+    padding: 24px 20px;
+    border-radius: 24px;
   }
 }

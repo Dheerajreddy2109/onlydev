@@ -1,7 +1,14 @@
 .ind {
-  background:
-    radial-gradient(600px 400px at 0% 100%, rgba(214, 190, 150, 0.2), transparent 60%),
-    #fff;
+  overflow: clip;
+  box-shadow: inset 0 1px 0 var(--line);
+}
+
+.ind-glow {
+  bottom: -260px;
+  left: -300px;
+  width: 760px;
+  height: 760px;
+  --glow: rgba(242, 216, 204, 0.55);
 }
 
 .ind-grid {
@@ -11,34 +18,66 @@
 }
 
 .ind-card {
-  padding: 22px 24px;
-  border-radius: 20px;
+  padding: 24px 26px 26px;
   border: 1px solid var(--line);
-  background: #fff;
-  transition: border-color 0.2s ease, translate 0.2s ease;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #fff, #fdfaf6);
+  box-shadow: var(--shadow-xs);
+  transition: border-color 0.3s ease, translate 0.4s var(--ease-out), box-shadow 0.4s ease;
 }
 
 .ind-card:hover {
-  border-color: var(--brand);
-  translate: 0 -2px;
+  border-color: #e2cfae;
+  translate: 0 -4px;
+  box-shadow: var(--shadow);
+}
+
+.ind-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.ind-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  box-shadow: inset 0 0 0 1px #ecdcc0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ind-card:hover .ind-icon {
+  background: var(--gold-fill);
+  color: #fff;
+}
+
+.ind-num {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--faint);
 }
 
 .ind-card h3 {
-  font-size: 17px;
-  letter-spacing: -0.02em;
   margin-bottom: 12px;
+  font-size: 18px;
+  letter-spacing: -0.02em;
 }
 
 .ind-card ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .ind-card li {
   position: relative;
-  padding-left: 16px;
+  padding-left: 18px;
   font-size: 14.5px;
   color: var(--ink-2);
 }
@@ -46,58 +85,72 @@
 .ind-card li::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 9px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--mint);
+  left: 2px;
+  top: 0.62em;
+  width: 7px;
+  height: 1px;
+  background: var(--brand);
 }
 
 .ind-note {
-  margin-top: 28px;
+  margin-top: 32px;
   font-size: 15px;
   color: var(--muted);
 }
 
 .ind-note a {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--brand-ink);
 }
 
 .inc-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 44px;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--line);
+  box-shadow: var(--shadow-sm);
 }
 
 .inc-card {
-  display: flex;
-  gap: 16px;
-  padding: 24px;
-  border-radius: 20px;
+  position: relative;
+  padding: 32px 30px 34px;
+  background: linear-gradient(180deg, #fffdf9, #fbf7f0);
+  transition: background-color 0.3s ease;
+}
+
+.inc-card:hover {
   background: #fff;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
 }
 
 .inc-icon {
   display: grid;
   place-items: center;
-  flex: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--lime-soft);
+  width: 46px;
+  height: 46px;
+  margin-bottom: 22px;
+  border-radius: 15px;
+  background: #fff;
   color: var(--brand-ink);
-  border: 1px solid #f0e5cf;
+  box-shadow: inset 0 0 0 1px #ecdcc0, var(--shadow-xs);
+}
+
+.inc-num {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--brand-light);
 }
 
 .inc-card h3 {
-  font-size: 16.5px;
+  margin-bottom: 8px;
+  font-size: 18px;
   letter-spacing: -0.02em;
-  margin: 2px 0 6px;
 }
 
 .inc-card p {
@@ -116,5 +169,8 @@
   .ind-grid,
   .inc-grid {
     grid-template-columns: 1fr;
+  }
+  .inc-card {
+    padding: 26px 22px 28px;
   }
 }

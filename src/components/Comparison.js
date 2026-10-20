@@ -6,6 +6,7 @@ import '../css/Comparison.css';
 const Comparison = () => {
   return (
     <section className="section cmp">
+      <span className="glow cmp-glow" data-parallax="0.4" aria-hidden="true" />
       <div className="container">
         <div className="split-head">
           <div>
@@ -13,7 +14,7 @@ const Comparison = () => {
             <h2 className="h-lg" data-split>
               Customers look for you first.
               <br />
-              Right now they find someone else.
+              Right now they find <em>someone else.</em>
             </h2>
           </div>
           <p className="lead" data-reveal data-delay="0.15">
@@ -33,8 +34,9 @@ const Comparison = () => {
               </p>
             ))}
           </div>
+          <span className="cmp-vs" aria-hidden="true">vs</span>
           <div className="cmp-col">
-            <h3 className="cmp-label good"><Icon name="check" size={14} strokeWidth={2.4} /> With your own website & web app</h3>
+            <h3 className="cmp-label good"><Icon name="check" size={14} strokeWidth={2.4} /> With your own website &amp; web app</h3>
             {withSite.map((t) => (
               <p key={t} className="cmp-row good">
                 <span><Icon name="check" size={13} strokeWidth={2.6} /></span>
@@ -52,7 +54,7 @@ const Comparison = () => {
             </p>
           </div>
           <div className="cmp-banner-cta">
-            <ContactButton className="btn btn-dark" source="comparison" title="Let’s get your business online.">
+            <ContactButton className="btn btn-primary" source="comparison" title="Let’s get your business online.">
               Get my business online <Icon name="arrow" />
             </ContactButton>
             <small>Tell us what you do — we send a written quote.</small>

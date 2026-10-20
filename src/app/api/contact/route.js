@@ -71,19 +71,19 @@ function ownerEmail(d) {
     ['Sent from', d.source || 'website'],
   ];
   const html = `
-    <div style="font-family:Inter,Arial,sans-serif;max-width:560px;color:#0b1511">
+    <div style="font-family:Inter,Arial,sans-serif;max-width:560px;color:#221f1b">
       <h2 style="margin:0 0 4px">New project enquiry</h2>
-      <p style="margin:0 0 20px;color:#66736e">From the ${escape(site.name)} website</p>
+      <p style="margin:0 0 20px;color:#766c61">From the ${escape(site.name)} website</p>
       <table style="border-collapse:collapse;width:100%">
         ${rows
           .map(
             ([k, v]) =>
-              `<tr><td style="padding:8px 12px;border:1px solid #e4eae7;background:#f5f8f6;width:150px;font-weight:600">${k}</td><td style="padding:8px 12px;border:1px solid #e4eae7">${escape(v)}</td></tr>`
+              `<tr><td style="padding:8px 12px;border:1px solid #ebe4d9;background:#f8f4ee;width:150px;font-weight:600">${k}</td><td style="padding:8px 12px;border:1px solid #ebe4d9">${escape(v)}</td></tr>`
           )
           .join('')}
       </table>
-      ${d.message ? `<h3 style="margin:24px 0 8px">Message</h3><p style="white-space:pre-wrap;margin:0;padding:12px;background:#f5f8f6;border-radius:8px">${escape(d.message)}</p>` : ''}
-      <p style="margin-top:24px;color:#66736e;font-size:13px">Reply to this email to answer ${escape(d.name)} directly.</p>
+      ${d.message ? `<h3 style="margin:24px 0 8px">Message</h3><p style="white-space:pre-wrap;margin:0;padding:12px;background:#f8f4ee;border-radius:8px">${escape(d.message)}</p>` : ''}
+      <p style="margin-top:24px;color:#766c61;font-size:13px">Reply to this email to answer ${escape(d.name)} directly.</p>
     </div>`;
   const text = rows.map(([k, v]) => `${k}: ${v}`).join('\n') + (d.message ? `\n\nMessage:\n${d.message}` : '');
   return { html, text };
@@ -92,7 +92,7 @@ function ownerEmail(d) {
 function confirmationEmail(d) {
   const first = d.name.split(' ')[0];
   const html = `
-    <div style="font-family:Inter,Arial,sans-serif;max-width:520px;color:#0b1511;line-height:1.6">
+    <div style="font-family:Inter,Arial,sans-serif;max-width:520px;color:#221f1b;line-height:1.6">
       <h2 style="margin:0 0 12px">Thanks, ${escape(first)} — we've got your enquiry.</h2>
       <p>We'll review what you need (<strong>${escape(d.project)}</strong>) and reply with a written quote — scope, price and delivery date — usually within one working day.</p>
       <p>If you have a brief, screenshots or a site you like, just reply to this email with them.</p>

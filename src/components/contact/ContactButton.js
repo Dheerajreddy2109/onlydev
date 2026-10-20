@@ -4,7 +4,7 @@ import { useContact } from './ContactModal';
 
 /**
  * Any call-to-action that should open the contact popup.
- * Usable from server components: <ContactButton className="btn btn-dark" source="hero">…</ContactButton>
+ * Usable from server components: <ContactButton className="btn btn-primary" source="hero">…</ContactButton>
  */
 export default function ContactButton({ children, className, source, title, prefill, ...props }) {
   const { open } = useContact();

@@ -1,8 +1,28 @@
+/* ---------- Final call to action ---------- */
 .final-cta {
-  padding: 120px 0;
+  padding: 120px 0 96px;
+}
+
+.final-panel {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 104px 32px;
+  border: 1px solid #e8d6b8;
+  border-radius: 40px;
   background:
-    radial-gradient(600px 300px at 50% 100%, rgba(176, 141, 91, 0.18), transparent 70%),
-    #fff;
+    radial-gradient(600px 360px at 0% 100%, rgba(242, 216, 204, 0.6), transparent 65%),
+    linear-gradient(180deg, #fffaf2, #f6eada);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 #fff;
+}
+
+.final-glow {
+  top: -260px;
+  right: -200px;
+  width: 720px;
+  height: 720px;
+  --glow: rgba(234, 208, 166, 0.75);
+  z-index: -1;
 }
 
 .final-inner {
@@ -13,12 +33,16 @@
 }
 
 .final-icon {
+  margin-bottom: 22px;
   color: var(--brand);
-  margin-bottom: 18px;
+}
+
+.final-inner h2 {
+  max-width: 900px;
 }
 
 .final-inner .lead {
-  margin: 18px auto 32px;
+  margin: 22px auto 36px;
 }
 
 .final-btns {
@@ -28,10 +52,13 @@
   gap: 12px;
 }
 
+/* ---------- Footer ---------- */
 .footer {
-  background: #f4eee5;
-  color: #7d746a;
-  padding: 72px 0 28px;
+  overflow: hidden;
+  padding: 80px 0 32px;
+  background: linear-gradient(180deg, var(--bg-soft), #efe6d8);
+  box-shadow: inset 0 1px 0 var(--line);
+  color: var(--muted);
 }
 
 .footer-grid {
@@ -40,28 +67,9 @@
   gap: 40px;
 }
 
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 20px;
-  color: var(--ink);
-  letter-spacing: -0.03em;
-}
-
-.footer-logo img {
-  border-radius: 50%;
-}
-
-.footer-logo span span {
-  color: var(--mint);
-}
-
 .footer-brand p {
   max-width: 340px;
-  margin: 16px 0 20px;
+  margin: 18px 0 20px;
   font-size: 14.5px;
 }
 
@@ -69,46 +77,79 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--ink);
-  font-weight: 600;
   font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.footer-mail svg {
+  color: var(--brand);
 }
 
 .footer-col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
 }
 
 .footer-col h3 {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink);
   margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
 }
 
 .footer-col a {
+  width: fit-content;
   font-size: 14.5px;
-  transition: color 0.2s ease;
+  color: var(--ink-2);
+  transition: color 0.25s ease;
 }
 
 .footer-col a:hover {
   color: var(--brand-ink);
 }
 
+/* Each letter sits in this mask so it can rise into place. */
+.footer-mark {
+  display: flex;
+  align-items: baseline;
+  gap: 0.06em;
+  overflow: hidden;
+  margin-top: 56px;
+  padding: 0.12em 0 0.1em;
+  font-size: clamp(84px, 20.5vw, 300px);
+  line-height: 0.82;
+  letter-spacing: -0.065em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.footer-mark span {
+  font-weight: 600;
+  color: #e5d8c4;
+}
+
+.footer-mark em {
+  font-family: var(--font-serif);
+  font-size: 1.08em;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: #d3b98e;
+}
+
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 12px;
-  margin-top: 56px;
+  margin-top: 28px;
   padding-top: 24px;
-  border-top: 1px solid rgba(60, 48, 36, 0.06);
+  border-top: 1px solid var(--line-strong);
   font-size: 13px;
-  color: #6f8279;
 }
 
 .sticky-bar {
@@ -126,21 +167,28 @@
 
 @media (max-width: 640px) {
   .final-cta {
-    padding: 80px 0;
+    padding: 80px 0 64px;
+  }
+  .final-panel {
+    padding: 64px 20px;
+    border-radius: 28px;
   }
   .final-btns .btn {
     width: 100%;
   }
   .footer {
-    padding-bottom: 96px;
+    padding-bottom: 104px;
+  }
+  .footer-mark {
+    margin-top: 48px;
   }
   .sticky-bar {
-    display: block;
     position: fixed;
     left: 12px;
     right: 12px;
     bottom: 12px;
     z-index: 90;
+    display: block;
   }
   .sticky-bar .btn {
     width: 100%;

@@ -130,7 +130,7 @@ export default function ContactForm({ prefill, source = 'website', onDone, autoF
           <li><b>Your call</b> — no payment or commitment until you approve it.</li>
         </ol>
         {onDone && (
-          <button type="button" className="btn btn-dark" onClick={onDone}>
+          <button type="button" className="btn btn-primary" onClick={onDone}>
             Back to the site
           </button>
         )}
@@ -151,7 +151,7 @@ export default function ContactForm({ prefill, source = 'website', onDone, autoF
           <Chips label="What do you want to build?" options={contactOptions.projects} value={form.project} onChange={set('project')} error={errors.project} />
           <Chips label="Budget" options={contactOptions.budgets} value={form.budget} onChange={set('budget')} />
           <Chips label="When do you want to launch?" options={contactOptions.timelines} value={form.timeline} onChange={set('timeline')} />
-          <button type="button" className="btn btn-dark cf-submit" onClick={next}>
+          <button type="button" className="btn btn-primary cf-submit" onClick={next}>
             Continue <Icon name="arrow" />
           </button>
         </div>
@@ -193,7 +193,7 @@ export default function ContactForm({ prefill, source = 'website', onDone, autoF
             <button type="button" className="btn btn-ghost" onClick={() => setStep(1)}>
               Back
             </button>
-            <button type="submit" className="btn btn-wa cf-submit" disabled={status === 'sending'}>
+            <button type="submit" className="btn btn-primary cf-submit" disabled={status === 'sending'}>
               {status === 'sending' ? <span className="cf-spinner" /> : <Icon name="mail" />}
               {status === 'sending' ? 'Sending…' : 'Get my free quote'}
             </button>

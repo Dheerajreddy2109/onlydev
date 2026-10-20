@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 import ContactButton from './contact/ContactButton';
-import { buildPlans, industries, projectTypes, rupees } from '@/data/site';
+import { buildPlans, industries, projectTypes } from '@/data/site';
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from '@/lib/gsap';
 import { getLenis } from '@/lib/lenis';
 import '../css/BuildPlanner.css';
@@ -112,10 +112,10 @@ function StepBody({ step, fill }) {
           <em>Book now</em>
         </div>
         <div className="bp-swatches">
-          <span style={{ background: '#0a2e20' }} />
-          <span style={{ background: '#0f9d58' }} />
-          <span style={{ background: '#c6f36b' }} />
-          <span style={{ background: '#f5f8f6' }} />
+          <span style={{ background: '#2f2a24' }} />
+          <span style={{ background: '#b8714b' }} />
+          <span style={{ background: '#e8cfae' }} />
+          <span style={{ background: '#f7f1e8' }} />
           <small>Your palette</small>
         </div>
       </div>
@@ -225,14 +225,15 @@ const BuildPlanner = () => {
 
   return (
     <section className="section bp" id="build" ref={root}>
+      <span className="glow bp-glow" data-parallax="0.6" aria-hidden="true" />
       <div className="container">
         <div className="bp-head">
-          <span className="bp-badge" data-reveal="left"><i /> Not a template</span>
+          <span className="tag bp-badge" data-reveal="left"><i /> Not a template</span>
           <h2 className="h-xl" data-lines>
             <span className="mask-line"><span data-line>Type your idea.</span></span>
             <span className="mask-line">
-              <span data-line className="gradient-text">
-                See the <HeadingCount value={Math.round(totalHours)} /> hours behind it.
+              <span data-line>
+                See the <em><HeadingCount value={Math.round(totalHours)} /> hours</em> behind it.
               </span>
             </span>
           </h2>
@@ -377,10 +378,22 @@ const BuildPlanner = () => {
             <div className="bp-receipt-total">
               <span>Templates used</span><b>None</b>
             </div>
+            {/* Prices are shared in the written quote, not on the site: the blurred figure is a stand-in
+                (not a real price), and the button over it opens the contact popup. */}
             <div className="bp-receipt-price">
-              <span>{project.pkg}</span>
-              <b>{rupees(project.price)}</b>
-              <small>starting price + GST · fixed in your written quote</small>
+              <span>{project.label}</span>
+              <div className="bp-price">
+                <b aria-hidden="true">₹00,000</b>
+                <ContactButton
+                  className="bp-price-unlock"
+                  source="build planner: price"
+                  title={fill('Get the price for {name}.')}
+                  prefill={quotePrefill}
+                >
+                  <Icon name="lock" size={14} /> Get my price
+                </ContactButton>
+              </div>
+              <small>Your exact price comes in a free written quote</small>
             </div>
             <ol className="bp-pay">
               <li><b>Free</b> written quote</li>
@@ -391,13 +404,13 @@ const BuildPlanner = () => {
           </div>
 
           <div className="bp-result-cta" data-reveal="right" data-delay="0.1">
-            <h2 className="h-lg">Get the real version of this.</h2>
+            <h2 className="h-lg">Get the <em>real</em> version of this.</h2>
             <p className="lead">
               Send it as it is. We reply with the keywords, the features, the domain and a written quote for{' '}
               <strong>{fill('{name}')}</strong> — usually the same working day.
             </p>
             <ContactButton
-              className="btn btn-wa bp-send"
+              className="btn btn-primary bp-send"
               source="build planner"
               title={fill('Get the real plan for {name}.')}
               prefill={quotePrefill}

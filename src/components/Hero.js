@@ -1,126 +1,181 @@
 import Icon from './Icon';
 import ContactButton from './contact/ContactButton';
-import { keywordStrip, pricing, rupees } from '@/data/site';
+import { keywordStrip } from '@/data/site';
 import '../css/Hero.css';
 
-const trust = [
-  { icon: 'doc', title: 'Fixed price, in writing', text: 'No surprise invoices' },
-  { icon: 'key', title: 'You own the code', text: 'Domain, design & logins' },
-  { icon: 'layout', title: 'Live preview link', text: 'Watch it being built' },
-  { icon: 'chat', title: 'Talk to the developer', text: 'Not a sales team' },
+// Promise row under the hero. Numbers count up as they scroll into view ([data-count], src/lib/motion.js).
+const stats = [
+  { count: 24, unit: 'h', label: 'Written quote with scope, price and date' },
+  { count: 100, unit: '%', label: 'Yours — code, domain and every login' },
+  { text: 'Live', label: 'Preview link to watch it being built' },
+  { text: '1:1', label: 'With the developer, not a sales team' },
 ];
 
-const Hero = () => {
-  const fromWebsite = pricing.websites[0].price;
-  const fromApp = pricing.webapps[0].price;
+// The storefront inside the mock browser.
+const products = [
+  { name: 'Dune vase', price: '₹2,400', art: 'vase' },
+  { name: 'Morning cup', price: '₹650', art: 'cup' },
+  { name: 'Shore plate', price: '₹980', art: 'plate' },
+];
 
+const chartLine = 'M0 50 C 16 48, 24 38, 40 40 S 66 30, 82 32 S 108 20, 124 23 S 150 12, 166 13 S 188 6, 200 4';
+const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+const Hero = () => {
   return (
     <section className="hero" id="top">
-      <div className="hero-glow" aria-hidden="true" />
+      <div className="hero-bg" aria-hidden="true">
+        <span className="hero-blob b1" data-parallax="0.5" />
+        <span className="hero-blob b2" data-parallax="0.3" />
+        <span className="hero-blob b3" data-parallax="0.8" />
+        <span className="hero-lines" />
+      </div>
+
       <div className="container hero-grid">
         <div className="hero-copy">
-          <span className="hero-pill">
-            <Icon name="sparkle" size={14} /> Custom websites · Web apps · SaaS
+          <span className="tag hero-pill">
+            <i /> Custom websites · Web apps · SaaS
           </span>
           {/* Each phrase rises out of its own mask on first paint (CSS, so it doesn't wait for JavaScript). */}
-          <h1 className="h-xl hero-title">
+          <h1 className="hero-title">
             <span className="hl"><span style={{ '--d': '0.05s' }}>Websites</span></span>{' '}
             <span className="hl"><span style={{ '--d': '0.12s' }}>&amp;</span></span>{' '}
             <span className="hl"><span style={{ '--d': '0.19s' }}>web apps</span></span>
             <br />
-            <span className="hl"><span className="gradient-text" style={{ '--d': '0.3s' }}>built to win</span></span>{' '}
-            <span className="hl"><span className="gradient-text" style={{ '--d': '0.38s' }}>customers.</span></span>
+            <span className="hl"><em style={{ '--d': '0.3s' }}>built to win</em></span>{' '}
+            <span className="hl"><span style={{ '--d': '0.38s' }}>customers.</span></span>
           </h1>
           <p className="lead hero-lead">
             We design and develop custom websites, online stores and web applications for growing businesses and
             startups — fast, mobile-first, SEO-ready and <strong>100% yours</strong>. No templates. No page builders.
           </p>
 
-          <div className="hero-price">
-            <div>
-              <span className="hero-price-label">Websites from</span>
-              <span className="hero-price-value">{rupees(fromWebsite)}</span>
-            </div>
-            <span className="hero-price-sep" />
-            <div>
-              <span className="hero-price-label">Web apps from</span>
-              <span className="hero-price-value">{rupees(fromApp)}</span>
-            </div>
-          </div>
-
           <div className="hero-ctas">
-            <ContactButton className="btn btn-wa" source="hero">
-              <Icon name="sparkle" />
+            <ContactButton className="btn btn-primary hero-cta" source="hero">
+              <span className="hero-cta-icon"><Icon name="sparkle" size={18} /></span>
               <span className="btn-stack">
                 Get a free quote
                 <small>Written quote · reply within 24 hours</small>
               </span>
+              <Icon name="arrow" />
             </ContactButton>
-            <a href="#pricing" className="btn btn-ghost">
-              See packages <Icon name="arrow" />
+            <a href="#work" className="btn btn-ghost">
+              See concepts <Icon name="arrow" />
             </a>
           </div>
         </div>
 
         <div className="hero-visual" aria-hidden="true">
-          {/* GSAP moves .hero-stage (3D tilt) and the .depth layers (scroll parallax); CSS animates the
-              cards inside them. Kept on separate elements because GSAP folds an element's CSS
-              translate/scale into its own transform the first time it touches it. */}
+          {/* GSAP moves .hero-stage (3D tilt), the .depth layers (parallax), .mock-site (the page scrolling inside
+              the browser) and .mock-cursor (a small shopping loop). CSS animates the cards inside those wrappers;
+              they're kept on separate elements because GSAP folds an element's CSS translate/scale into its own
+              transform the first time it touches it. */}
           <div className="hero-stage">
             <div className="mock-browser">
               <div className="mock-bar">
-                <span /><span /><span />
-                <div className="mock-url">
-                  <Icon name="lock" size={11} /> yourbusiness.in
-                </div>
+                <span className="mock-dots"><i /><i /><i /></span>
+                <span className="mock-url"><Icon name="lock" size={10} /> terrastudio.in</span>
               </div>
-              <div className="mock-site">
+              <div className="mock-viewport">
                 <div className="mock-nav">
-                  <i className="mock-logo" />
-                  <b /><b /><b />
-                  <em>Book now</em>
+                  <b className="mock-brand">Terra<em>.</em></b>
+                  <span className="mock-links"><i>Shop</i><i>Studio</i><i>Journal</i></span>
+                  <span className="mock-cart"><Icon name="bag" size={13} /><em>2</em></span>
                 </div>
-                <div className="mock-hero">
-                  <div>
-                    <strong>The first result when your city searches</strong>
-                    <p />
-                    <p className="short" />
-                    <div className="mock-btns">
-                      <em>Get a quote</em>
-                      <em className="ghost">WhatsApp</em>
+                <div className="mock-site">
+                  <div className="ms-hero">
+                    <div className="ms-copy">
+                      <small>New · Autumn collection</small>
+                      <strong>Handmade for slow mornings.</strong>
+                      <p>Small-batch stoneware, glazed and fired in our Jaipur studio.</p>
+                      <div className="ms-btns">
+                        <em className="ms-cta">Shop the collection</em>
+                        <em className="ms-ghost">Visit the studio</em>
+                      </div>
+                    </div>
+                    <div className="ms-photo">
+                      <span className="ms-arch" />
+                      <span className="ms-vase" />
+                      <span className="ms-bowl" />
+                      <span className="ms-tag">Dune vase · ₹2,400</span>
                     </div>
                   </div>
-                  <div className="mock-photo" />
+                  <div className="ms-strip">
+                    <span><Icon name="box" size={11} /> Free shipping over ₹1,999</span>
+                    <span><Icon name="sparkle" size={11} /> Gift-wrapped</span>
+                    <span><Icon name="shield" size={11} /> UPI &amp; COD</span>
+                  </div>
+                  <div className="ms-products">
+                    {products.map((p) => (
+                      <div className="ms-card" key={p.name}>
+                        <span className={`ms-thumb ${p.art}`} />
+                        <b>{p.name}</b>
+                        <span>{p.price}</span>
+                        <em>Add</em>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="ms-visit">
+                    <div>
+                      <small>Studio visits</small>
+                      <b>Sat &amp; Sun · 11–6</b>
+                      <span>Throw a pot with us — book a slot online.</span>
+                    </div>
+                    <em>Book a slot</em>
+                  </div>
                 </div>
-                <div className="mock-cards">
-                  <div /><div /><div />
+              </div>
+              <span className="mock-ripple" />
+              <span className="mock-cursor">
+                <svg viewBox="0 0 24 24" width="22" height="22">
+                  <path d="M5 3.5 19 12l-6.2 1.4L9.6 19.5 5 3.5Z" />
+                </svg>
+              </span>
+            </div>
+
+            <div className="depth" data-depth="phone">
+              <div className="mock-phone">
+                <span className="mp-notch" />
+                <div className="mp-head"><b>Your bag</b><span>2 items</span></div>
+                <div className="mp-item">
+                  <span className="mp-thumb vase" />
+                  <div><b>Dune vase</b><span>Sand glaze</span></div>
+                  <em>₹2,400</em>
                 </div>
+                <div className="mp-item">
+                  <span className="mp-thumb cup" />
+                  <div><b>Morning cup</b><span>Set of 2</span></div>
+                  <em>₹1,300</em>
+                </div>
+                <div className="mp-total"><span>Total</span><b>₹3,700</b></div>
+                <span className="mp-pay">Pay ₹3,700 with UPI</span>
+                <span className="mp-secure"><Icon name="lock" size={9} /> Secure checkout</span>
               </div>
             </div>
 
-            <div className="depth" data-depth="dash">
-              <div className="mock-dash">
-                <div className="mock-dash-head">
-                  <span>Your dashboard</span>
-                  <b>Live</b>
-                </div>
-                <div className="mock-chart">
-                  {[28, 40, 34, 52, 46, 64, 58, 76, 70, 92].map((h, i) => (
-                    <i key={i} style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-                <div className="mock-dash-foot">
-                  <span><i className="dot" /> Bookings</span>
-                  <span><i className="dot alt" /> Orders</span>
-                </div>
+            <div className="depth" data-depth="chart">
+              <div className="mock-stats">
+                <div className="mx-head"><span>Orders · this week</span><em>+18%</em></div>
+                <b className="mx-value">126</b>
+                <svg className="mx-chart" viewBox="0 0 200 56">
+                  <defs>
+                    <linearGradient id="mx-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stopColor="#c9a46c" stopOpacity="0.35" />
+                      <stop offset="1" stopColor="#c9a46c" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path d={`${chartLine} L200 56 L0 56 Z`} fill="url(#mx-fill)" />
+                  <path className="mx-line" d={chartLine} pathLength="1" />
+                </svg>
+                <div className="mx-days">{days.map((d, i) => <i key={i}>{d}</i>)}</div>
               </div>
             </div>
 
             <div className="depth" data-depth="toast">
               <div className="mock-toast">
-                <span className="mock-toast-icon"><Icon name="check" size={14} strokeWidth={2.4} /></span>
+                <span className="mock-toast-icon"><Icon name="check" size={13} strokeWidth={2.6} /></span>
                 <div>
-                  <b>New booking</b>
+                  <b>New order · ₹2,400</b>
                   <span>Paid via UPI · just now</span>
                 </div>
               </div>
@@ -128,10 +183,10 @@ const Hero = () => {
 
             <div className="depth" data-depth="score">
               <div className="mock-score">
-                <div className="ring"><span>98</span></div>
+                <span className="ring"><span>98</span></span>
                 <div>
-                  <b>Performance</b>
-                  <span>Core Web Vitals passed</span>
+                  <b>Lighthouse</b>
+                  <span>Speed 98 · SEO 100</span>
                 </div>
               </div>
             </div>
@@ -140,24 +195,29 @@ const Hero = () => {
       </div>
 
       <div className="container">
-        <ul className="hero-trust">
-          {trust.map((t, i) => (
-            <li key={t.title} style={{ '--i': i }}>
-              <span className="hero-trust-icon"><Icon name={t.icon} size={18} /></span>
-              <div>
-                <b>{t.title}</b>
-                <span>{t.text}</span>
-              </div>
+        <ul className="hero-stats">
+          {stats.map((s, i) => (
+            <li key={s.label} style={{ '--i': i }}>
+              <b>
+                {s.text ?? (
+                  <>
+                    <span data-count={s.count}>{s.count}</span>
+                    {s.unit}
+                  </>
+                )}
+              </b>
+              <span>{s.label}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="marquee" aria-label="What we build" data-marquee data-speed="45">
+      <div className="marquee" aria-label="What we build" data-marquee data-speed="70">
         <div className="marquee-track">
           {[...keywordStrip, ...keywordStrip].map((k, i) => (
             <span key={i} aria-hidden={i >= keywordStrip.length}>
-              <i /> {k}
+              {k}
+              <Icon name="sparkle" size={15} />
             </span>
           ))}
         </div>

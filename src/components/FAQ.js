@@ -12,9 +12,9 @@ const FAQ = () => {
         <div className="container faq-wrap">
           <div className="faq-head">
             <span className="eyebrow" data-reveal="left">FAQ</span>
-            <h2 className="h-lg" data-split>What people ask before they book.</h2>
+            <h2 className="h-lg" data-split>What people ask <em>before they book.</em></h2>
             <p className="lead" style={{ marginTop: 16 }} data-reveal data-delay="0.15">
-              Straight answers about website cost, timelines, SEO and web app development.
+              Straight answers about timelines, SEO, ownership and web app development.
             </p>
           </div>
           <FaqList items={faqs} />
@@ -34,7 +34,7 @@ const FAQ = () => {
           <div className="split-head">
             <div>
               <span className="eyebrow" data-reveal="left">Powered by</span>
-              <h2 className="h-lg" data-split>The same engineering that runs serious products.</h2>
+              <h2 className="h-lg" data-split>The same engineering that runs <em>serious products.</em></h2>
             </div>
             <p className="lead" data-reveal data-delay="0.15">
               Your website is not built on a drag-and-drop page builder. It runs on the frameworks, databases and cloud

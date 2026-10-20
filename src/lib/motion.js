@@ -1,18 +1,24 @@
 // Homepage scroll animations (set up by components/motion/HomeMotion.js).
 //
-// Every GSAP animation here is tied to scrolling: it either starts when its part of the page scrolls into
-// view (ScrollTrigger) or is scrubbed to the scroll position. Clicks, tabs and the FAQ use plain CSS instead.
+// Every GSAP animation here is tied to scrolling: it starts when its part of the page scrolls into view
+// (ScrollTrigger), is scrubbed to the scroll position, or — the marquees and the hero cursor — loops only while
+// its part of the page is on screen. Clicks, tabs and the FAQ use plain CSS instead.
 //
 // Sections opt in with data attributes in their markup:
 //   data-split      heading lines rise out of a mask; data-split="chars" flips letters in instead
 //   data-lines      same rise for headings React keeps updating (they carry their own .mask-line markup)
 //   data-reveal     fade up, or "left" / "right" / "scale"; data-delay="0.15" offsets it
-//   data-stagger    direct children arrive one after another, row by row; [data-pop] icons spring in
-//   data-marquee    endless strip that moves only while on screen, faster with scrolling ("reverse" flips it)
-// Section-specific effects (hero depth and tilt, service cards, design reveals, comparison, process pin) are below.
+//   data-stagger    direct children arrive one after another, row by row; [data-pop] icons spring in.
+//                   data-stagger="content" moves what is inside each child instead of the child itself
+//   data-count      the number counts up from zero (the markup holds the final value)
+//   data-parallax   a decorative layer drifts against the scroll; the value sets how far
+//   data-marquee    endless strip that moves only while on screen, speeding up and leaning with the scroll
+//                   ("reverse" flips it)
+// Section-specific effects (hero, service and design cards, the concepts row, comparison, process pin,
+// footer wordmark) are below.
 //
-// Ground rules: reveals fire early and only once, only one short pin (desktop), nothing runs when the
-// visitor prefers reduced motion, and nothing is hidden by CSS, so content shows even if this never runs.
+// Ground rules: reveals fire early and only once, pins are desktop-only, nothing runs when the visitor
+// prefers reduced motion, and nothing is hidden by CSS, so content shows even if this never runs.
 import { gsap, ScrollTrigger, SplitText } from './gsap';
 
 const START = 'top 88%';
@@ -106,23 +112,73 @@ function fadeReveals(desktop) {
 
 function staggerReveals(desktop) {
   $$('[data-stagger]').forEach((group) => {
+    const inner = group.dataset.stagger === 'content';
     const items = gsap.utils.toArray(group.children).filter((el) => !onScreen(el));
     if (!items.length) return;
-    gsap.set(items, { autoAlpha: 0, y: desktop ? 44 : 28 });
+    const pops = (el) => $$('[data-pop]', el);
+    // What rises: the item itself, or (content mode) its children apart from the icons that pop.
+    const parts = (el) => (inner ? gsap.utils.toArray(el.children).filter((c) => !c.hasAttribute('data-pop')) : [el]);
+    gsap.set(items.flatMap(parts), { autoAlpha: 0, y: desktop ? 44 : 28 });
+    if (inner) gsap.set(items.flatMap(pops), { autoAlpha: 0 });
     ScrollTrigger.batch(items, {
       start: START,
       once: true,
       onEnter: (batch) => {
-        gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.9, ease: EASE, stagger: 0.09, clearProps: 'transform' });
-        const pops = batch.flatMap((el) => $$('[data-pop]', el));
-        if (pops.length) {
+        gsap.to(batch.flatMap(parts), {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.9,
+          ease: EASE,
+          stagger: inner ? 0.06 : 0.09,
+          clearProps: 'transform',
+        });
+        const icons = batch.flatMap(pops);
+        if (icons.length) {
           gsap.fromTo(
-            pops,
+            icons,
             { scale: 0.4, rotation: -25 },
-            { scale: 1, rotation: 0, duration: 0.8, ease: 'back.out(2.2)', stagger: 0.09, delay: 0.15, clearProps: 'transform' }
+            { scale: 1, rotation: 0, autoAlpha: 1, duration: 0.8, ease: 'back.out(2.2)', stagger: 0.09, delay: 0.15, clearProps: 'transform' }
           );
         }
       },
+    });
+  });
+}
+
+// Numbers count up from zero the first time they scroll into view.
+function counters() {
+  const restore = [];
+  $$('[data-count]').forEach((el) => {
+    if (onScreen(el)) return;
+    const text = el.textContent;
+    const value = { n: 0 };
+    el.textContent = '0';
+    restore.push(() => {
+      el.textContent = text;
+    });
+    gsap.to(value, {
+      n: Number(el.dataset.count),
+      duration: 1.6,
+      ease: 'power2.out',
+      onUpdate: () => {
+        el.textContent = String(Math.round(value.n));
+      },
+      onComplete: () => {
+        el.textContent = text;
+      },
+      scrollTrigger: { trigger: el, start: START, once: true },
+    });
+  });
+  return () => restore.forEach((undo) => undo());
+}
+
+// Decorative glows sink a little slower than the page while their section is on screen.
+function parallax() {
+  $$('[data-parallax]').forEach((el) => {
+    gsap.to(el, {
+      y: (Number(el.dataset.parallax) || 0.4) * 240,
+      ease: 'none',
+      scrollTrigger: { trigger: el.parentElement, start: 'clamp(top bottom)', end: 'bottom top', scrub: true },
     });
   });
 }
@@ -131,44 +187,106 @@ function staggerReveals(desktop) {
 
 function hero(desktop) {
   const section = $('.hero');
-  if (!section || !desktop) return;
+  if (!section) return;
+  const site = $('.mock-site', section);
+  const view = $('.mock-viewport', section);
+  // How far the mock page can scroll inside its browser window.
+  const pageScroll = () => -Math.max(0, site.offsetHeight - view.clientHeight);
+
+  if (!desktop) {
+    // Phones and tablets: the mock page scrolls inside its window as the hero passes.
+    gsap.to(site, {
+      y: pageScroll,
+      ease: 'none',
+      scrollTrigger: { trigger: view, start: 'top 85%', end: 'bottom top', scrub: 0.6, invalidateOnRefresh: true },
+    });
+    return;
+  }
 
   // Depth: the floating cards sit at different distances from the viewer.
-  gsap.set('[data-depth="dash"]', { z: 60 });
-  gsap.set('[data-depth="toast"]', { z: 90 });
+  gsap.set('[data-depth="phone"]', { z: 80 });
+  gsap.set('[data-depth="toast"]', { z: 100 });
+  gsap.set('[data-depth="chart"]', { z: 60 });
   gsap.set('[data-depth="score"]', { z: 40 });
 
   // Scrolling away: the copy drifts up and fades late, the mock turns in 3D and sinks more slowly than the page,
-  // and the floating cards rise at different speeds, so the layers separate.
+  // the shop inside it scrolls, and the floating cards rise at different speeds, so the layers separate.
   gsap
     .timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { trigger: section, start: 0, end: 'bottom top', scrub: 0.6 },
+      defaults: { ease: 'none', duration: 1 },
+      scrollTrigger: { trigger: section, start: 0, end: 'bottom top', scrub: 0.6, invalidateOnRefresh: true },
     })
     .to('.hero-copy', { y: -90 }, 0)
     .to('.hero-copy', { opacity: 0.1, ease: 'power2.in' }, 0)
     .to('.hero-visual', { y: 110 }, 0)
-    .to('.hero-glow', { y: 180 }, 0)
     .fromTo('.hero-stage', { rotationX: 0, rotationY: 0 }, { rotationX: 9, rotationY: -14 }, 0)
-    .to('[data-depth="dash"]', { y: -120 }, 0)
+    .to(site, { y: pageScroll, duration: 0.6, ease: 'power1.inOut' }, 0)
+    .to('[data-depth="phone"]', { y: -150 }, 0)
+    .to('[data-depth="chart"]', { y: -110 }, 0)
     .to('[data-depth="toast"]', { y: -80 }, 0)
     .to('[data-depth="score"]', { y: -50 }, 0);
 }
 
+// Desktop: a cursor shops on the mock site — presses "Shop the collection", taps the vase (the bag count bumps),
+// opens the bag — on a loop that only runs while the hero is on screen.
+function heroCursor() {
+  const browser = $('.mock-browser');
+  const cursor = browser && $('.mock-cursor', browser);
+  const ripple = browser && $('.mock-ripple', browser);
+  if (!cursor || !ripple) return;
+  const badge = $('.mock-cart em', browser);
+  const stops = ['.ms-cta', '.ms-tag', '.mock-cart'].map((s) => $(s, browser)).filter(Boolean);
+
+  // Centre of an element relative to the browser frame, in the frame's own (unscaled) pixels.
+  const centre = (el) => {
+    const frame = browser.getBoundingClientRect();
+    const scale = frame.width / browser.offsetWidth || 1;
+    const box = el.getBoundingClientRect();
+    return { x: (box.left - frame.left + box.width / 2) / scale, y: (box.top - frame.top + box.height / 2) / scale };
+  };
+  // Distance from the cursor's resting spot to an element; the arrow's tip is 4px in from its corner.
+  const travel = (el, axis) => centre(el)[axis] - (axis === 'x' ? cursor.offsetLeft : cursor.offsetTop) - 4;
+
+  // repeatRefresh re-measures the targets on every lap (the mock page may have scrolled meanwhile).
+  const tl = gsap.timeline({ paused: true, repeat: -1, repeatDelay: 1, repeatRefresh: true, delay: 1.8, defaults: { ease: 'power3.inOut' } });
+  stops.forEach((el, i) => {
+    tl.to(cursor, { x: () => travel(el, 'x'), y: () => travel(el, 'y'), duration: 1.1 }, i ? '+=0.5' : 0)
+      .to(cursor, { scale: 0.8, duration: 0.12, ease: 'power2.in' })
+      .set(ripple, { x: () => centre(el).x, y: () => centre(el).y })
+      .fromTo(ripple, { scale: 0.3, autoAlpha: 0.8 }, { scale: 2.2, autoAlpha: 0, duration: 0.7, ease: 'power2.out' })
+      .to(cursor, { scale: 1, duration: 0.25, ease: 'back.out(3)' }, '<');
+    if (badge && i === 1) {
+      tl.fromTo(badge, { scale: 1 }, { scale: 1.5, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.out' }, '<');
+    }
+  });
+  tl.to(cursor, { x: 0, y: 0, duration: 1.2 }, '+=0.6');
+
+  const trigger = ScrollTrigger.create({
+    trigger: '.hero',
+    start: 'top bottom',
+    end: 'bottom top',
+    onToggle: (self) => (self.isActive ? tl.play() : tl.pause()),
+  });
+  if (trigger.isActive) tl.play();
+}
+
 /* ---------- Marquees ---------- */
 
-// Endless strips that move only while on screen; their speed and direction follow the scroll.
+// Endless strips that move only while on screen; their speed and direction follow the scroll, and they lean
+// into fast scrolling.
 function marquees() {
   $$('[data-marquee]').forEach((wrap) => {
     // The track holds the items twice, so moving it by half its width loops seamlessly.
+    const track = wrap.firstElementChild;
     const reverse = wrap.dataset.marquee === 'reverse';
     const loop = gsap.fromTo(
-      wrap.firstElementChild,
+      track,
       { xPercent: reverse ? -50 : 0 },
       { xPercent: reverse ? 0 : -50, duration: Number(wrap.dataset.speed) || 40, ease: 'none', repeat: -1 }
     );
     loop.totalTime(loop.duration() * 500); // start deep into the loop so it can also run backwards
 
+    const lean = gsap.quickTo(track, 'skewX', { duration: 0.6, ease: 'power3.out' });
     let direction = 1;
     let settle;
     const speed = (timeScale) => gsap.to(loop, { timeScale, duration: 0.6, ease: 'power2.out', overwrite: true });
@@ -179,10 +297,15 @@ function marquees() {
       end: 'bottom top',
       onToggle: (self) => (self.isActive ? loop.resume() : loop.pause()), // idle while off screen
       onUpdate: (self) => {
+        const velocity = self.getVelocity();
         direction = self.direction;
-        speed(direction * (1 + gsap.utils.clamp(0, 4, Math.abs(self.getVelocity()) / 600)));
+        speed(direction * (1 + gsap.utils.clamp(0, 4, Math.abs(velocity) / 600)));
+        lean(gsap.utils.clamp(-9, 9, velocity / -260));
         settle?.kill();
-        settle = gsap.delayedCall(0.18, () => speed(direction));
+        settle = gsap.delayedCall(0.18, () => {
+          speed(direction);
+          lean(0);
+        });
       },
     });
   });
@@ -214,23 +337,39 @@ function offerCards(desktop) {
   );
 }
 
+// The illustration is uncovered from the bottom, then its parts come alive: [data-grow] bars rise,
+// [data-draw] lines draw themselves and [data-pop] badges spring in.
 function designCards(desktop) {
-  const clip = (top) => `inset(${top}% 0% 0% 0% round 22px)`;
+  const clip = (top) => `inset(${top}% 0% 0% 0% round 26px)`;
+  // Not every illustration has every kind of part, and GSAP warns about empty target lists.
+  const parts = (card) => ({
+    pop: $$('[data-pop]', card),
+    grow: $$('[data-grow]', card),
+    draw: $$('[data-draw]', card),
+  });
   revealEach(
     $$('.diff-card'),
     (card) => {
+      const { pop, grow, draw } = parts(card);
       gsap.set($('.diff-art', card), { clipPath: clip(100) });
       gsap.set($('.art', card), { scale: 1.3, yPercent: 14 });
       gsap.set($$('.diff-copy > *', card), { autoAlpha: 0, y: 24 });
-      gsap.set($$('[data-pop]', card), { scale: 0 });
+      if (pop.length) gsap.set(pop, { scale: 0 });
+      if (grow.length) gsap.set(grow, { scaleY: 0, transformOrigin: '50% 100%' });
+      if (draw.length) gsap.set(draw, { strokeDashoffset: 1 });
     },
-    (card) =>
-      gsap
+    (card) => {
+      const { pop, grow, draw } = parts(card);
+      const tl = gsap
         .timeline()
         .to($('.diff-art', card), { clipPath: clip(0), duration: 1.25, ease: 'expo.out', clearProps: 'clipPath' })
         .to($('.art', card), { scale: 1, yPercent: 0, duration: 1.5, ease: 'expo.out' }, 0)
-        .to($$('.diff-copy > *', card), { autoAlpha: 1, y: 0, duration: 0.8, ease: EASE, stagger: 0.08, clearProps: 'transform' }, 0.3)
-        .to($$('[data-pop]', card), { scale: 1, duration: 0.7, ease: 'back.out(2.4)', stagger: 0.1, clearProps: 'transform' }, 0.55)
+        .to($$('.diff-copy > *', card), { autoAlpha: 1, y: 0, duration: 0.8, ease: EASE, stagger: 0.08, clearProps: 'transform' }, 0.3);
+      if (draw.length) tl.to(draw, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 0.4);
+      if (grow.length) tl.to(grow, { scaleY: 1, duration: 0.9, ease: 'expo.out', stagger: 0.05, clearProps: 'transform' }, 0.45);
+      if (pop.length) tl.to(pop, { scale: 1, duration: 0.7, ease: 'back.out(2.4)', stagger: 0.08, clearProps: 'transform' }, 0.6);
+      return tl;
+    }
   );
 
   if (!desktop) return;
@@ -242,6 +381,74 @@ function designCards(desktop) {
       { y: -26, ease: 'none', scrollTrigger: { trigger: art.closest('.diff-card'), start: 'top bottom', end: 'bottom top', scrub: true } }
     )
   );
+}
+
+/* ---------- Concepts ---------- */
+
+// Desktop with room to pin: the section holds while the row scrolls sideways with the page; the counter and
+// bar follow along, cards ease up to full size as they arrive, and the chips on each screen drift faster than
+// the screen behind them. Elsewhere the row is swiped natively and its cards rise in.
+function showcase(pinnable) {
+  const section = $('#work');
+  if (!section) return undefined;
+  const viewport = $('.work-viewport', section);
+  const track = $('.work-track', section);
+  const cards = $$('.work-card', section);
+
+  if (!pinnable) {
+    revealEach(
+      [...cards, $('.work-end', section)].filter(Boolean),
+      (el) => gsap.set(el, { autoAlpha: 0, y: 60 }),
+      (el) => gsap.to(el, { autoAlpha: 1, y: 0, duration: 1.1, ease: 'expo.out', clearProps: 'transform' }),
+      0.12
+    );
+    return undefined;
+  }
+
+  const counter = $('.work-count b', section);
+  const setBar = gsap.quickSetter($('.work-bar i', section), 'scaleX');
+  const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+
+  section.classList.add('is-pinned');
+  viewport.scrollLeft = 0;
+  gsap.set(viewport, { overflow: 'hidden' }); // the page moves the row now, not the visitor's sideways scroll
+
+  const row = gsap.to(track, {
+    x: () => -distance(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: section,
+      start: 'top top',
+      end: () => `+=${distance()}`,
+      pin: true,
+      scrub: 0.8,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      refreshPriority: 2, // above the process pin: measure pins in page order
+      onUpdate: (self) => {
+        setBar(self.progress);
+        counter.textContent = String(Math.min(cards.length, Math.floor(self.progress * cards.length) + 1)).padStart(2, '0');
+      },
+    },
+  });
+
+  cards.forEach((card) => {
+    gsap.fromTo(
+      card,
+      { scale: 0.9, autoAlpha: 0.55 },
+      { scale: 1, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: card, containerAnimation: row, start: 'left 105%', end: 'left 62%', scrub: true } }
+    );
+    const chips = $$('[data-float]', card);
+    if (chips.length) {
+      gsap.fromTo(
+        chips,
+        { x: 46 },
+        { x: -46, ease: 'none', scrollTrigger: { trigger: card, containerAnimation: row, start: 'left right', end: 'right left', scrub: true } }
+      );
+    }
+  });
+
+  return () => section.classList.remove('is-pinned');
 }
 
 /* ---------- Comparison ---------- */
@@ -258,6 +465,18 @@ function comparison(desktop) {
       .from($$('.cmp-row', col), { autoAlpha: 0, x: good ? shift : -shift, duration: 0.85, ease: EASE, stagger: 0.09, clearProps: 'transform' }, at + 0.1)
       .from($$('.cmp-row > span', col), { scale: 0, duration: 0.5, ease: 'back.out(3)', stagger: 0.09, clearProps: 'transform' }, at + 0.35);
   });
+
+  const vs = $('.cmp-vs');
+  if (vs && desktop && !onScreen(vs)) {
+    gsap.from(vs, {
+      scale: 0,
+      rotation: -120,
+      duration: 0.9,
+      ease: 'back.out(2)',
+      clearProps: 'transform',
+      scrollTrigger: { trigger: vs, start: 'top 80%', once: true },
+    });
+  }
 
   const banner = $('.cmp-banner');
   if (banner && !onScreen(banner)) {
@@ -302,7 +521,7 @@ function processSteps() {
       pin: true,
       scrub: 0.8,
       anticipatePin: 1,
-      refreshPriority: 1, // measure triggers in page order now that a pin adds space
+      refreshPriority: 1, // measure triggers in page order now that pins add space
       invalidateOnRefresh: true,
     },
   });
@@ -314,15 +533,28 @@ function processSteps() {
       const at = i + 1; // the line reaches step n at time n
       tl.fromTo(
         $('.proc-icon', step),
-        { scale: 0.72, backgroundColor: '#e7ede9' },
-        { scale: 1, backgroundColor: '#c6f36b', duration: 0.35, ease: 'back.out(2.5)' },
+        { scale: 0.72, backgroundColor: '#f1eadf' },
+        { scale: 1, backgroundColor: '#ead7b4', duration: 0.35, ease: 'back.out(2.5)' },
         at - 0.18
       ).fromTo($$('h3, p', step), { opacity: 0.28 }, { opacity: 1, duration: 0.3 }, at - 0.15);
     });
   tl.to({}, { duration: 0.4 }); // hold the finished row for a moment before letting go
 }
 
-/* ---------- Final call to action ---------- */
+/* ---------- Footer ---------- */
+
+// The giant wordmark's letters rise into their mask as the footer scrolls into view (scrubbed).
+function footerMark() {
+  const mark = $('.footer-mark');
+  if (!mark) return;
+  const split = SplitText.create(mark, { type: 'chars', aria: 'none' });
+  gsap.from(split.chars, {
+    yPercent: 110,
+    ease: 'power3.out',
+    stagger: 0.08,
+    scrollTrigger: { trigger: mark, start: 'top bottom', end: 'bottom bottom', scrub: 0.8 },
+  });
+}
 
 function finalIcon() {
   const icon = $('.final-icon');
@@ -338,15 +570,6 @@ function finalIcon() {
 
 /* ---------- Setup ---------- */
 
-// One failing effect must not take the others down (or leave content hidden).
-function run(name, setup) {
-  try {
-    setup();
-  } catch (err) {
-    console.error(`[motion] ${name} failed`, err);
-  }
-}
-
 export function initHomeMotion() {
   // matchMedia reverts everything (restoring the original markup) and re-runs when a condition changes.
   gsap.matchMedia().add(
@@ -356,18 +579,34 @@ export function initHomeMotion() {
       tall: '(min-height: 720px)',
     },
     ({ conditions: { motion, desktop, tall } }) => {
-      if (!motion) return;
+      if (!motion) return undefined;
+      const cleanups = [];
+      // One failing effect must not take the others down (or leave content hidden).
+      const run = (name, setup) => {
+        try {
+          const undo = setup();
+          if (typeof undo === 'function') cleanups.push(undo);
+        } catch (err) {
+          console.error(`[motion] ${name} failed`, err);
+        }
+      };
       run('headings', splitHeadings);
       run('masked lines', maskedLines);
       run('reveals', () => fadeReveals(desktop));
       run('staggers', () => staggerReveals(desktop));
+      run('counters', counters);
+      run('parallax', parallax);
       run('hero', () => hero(desktop));
+      if (desktop) run('hero cursor', heroCursor);
       run('marquees', marquees);
       run('offer cards', () => offerCards(desktop));
       run('design cards', () => designCards(desktop));
+      run('concepts', () => showcase(desktop && tall)); // pins before the process pin: page order
       run('comparison', () => comparison(desktop));
       if (desktop && tall) run('process', processSteps);
+      run('footer wordmark', footerMark);
       run('final icon', finalIcon);
+      return () => cleanups.forEach((undo) => undo());
     }
   );
 }

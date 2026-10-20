@@ -30,7 +30,7 @@ export default function SmoothScrolling({ children }) {
       scrollTrigger: { start: 0, end: 'max', scrub: 0.3 },
     });
 
-    // Parts of the page change height after load (planner steps, pricing tabs, FAQ answers, web fonts),
+    // Parts of the page change height after load (planner steps, FAQ answers, web fonts),
     // which moves every trigger below them; re-measure when that happens.
     const main = document.querySelector('main') || document.body;
     let lastHeight = main.offsetHeight;
